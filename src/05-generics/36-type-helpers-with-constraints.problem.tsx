@@ -1,8 +1,7 @@
 import { Equal, Expect } from "../helpers/type-utils";
 
-type AllOrNothing<T> = T | ToUndefinedObject<T>;
-
-type ToUndefinedObject<T> = Partial<Record<keyof T, undefined>>;
+type ToUndefinedObject<T extends object> = Partial<Record<keyof T, undefined>>;
+type AllOrNothing<T extends object> = T | ToUndefinedObject<T>;
 
 /**
  * There's a problem with our AllOrNothing type. It's letting

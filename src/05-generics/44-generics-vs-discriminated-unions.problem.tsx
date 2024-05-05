@@ -14,20 +14,20 @@
  * generics that's much simpler. Try to figure out how to do that.
  */
 
-export type ModalProps<TVariant extends PossibleVariants> = {
+export type ModalProps = {
   isOpen: boolean;
-  variant: TVariant;
-} & (TVariant extends "with-button"
-  ? {
+} & (
+    | {
+      variant: "with-button",
       buttonLabel: string;
       onButtonClick: () => void;
+    } | {
+      variant: "without-button"
     }
-  : {});
+  );
 
-export type PossibleVariants = "with-button" | "without-button";
-
-export const Modal = <TVariant extends PossibleVariants>(
-  props: ModalProps<TVariant>,
+export const Modal = (
+  props: ModalProps,
 ) => {
   // ...
   return null;
@@ -40,7 +40,7 @@ export const Parent = () => {
         isOpen
         variant="with-button"
         buttonLabel="Click Me!"
-        onButtonClick={() => {}}
+        onButtonClick={() => { }}
       ></Modal>
       <Modal isOpen variant="without-button"></Modal>
 
@@ -51,7 +51,7 @@ export const Parent = () => {
         isOpen
         variant="without-button"
         /* @ts-expect-error */
-        onButtonClick={() => {}}
+        onButtonClick={() => { }}
       />
     </>
   );
